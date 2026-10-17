@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Opposite Adjectives — Flashcards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+:root{--bg:#faf8f2;--ink:#111;--line:#111;--sh:#111;--paper:#fff;--card:#e9e9ec;--grid:rgba(0,0,0,.045);--pink:#ff2d87;--bad:#fbc3dc;--mid:#fbf4a6;--good:#d5f66f;--lav:#d9d2ff;
+ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#16151b;--ink:#f2efe6;--line:#8d8b98;--sh:#000;--paper:#24232b;--card:#2b2a33;--grid:rgba(255,255,255,.04);--lav:#3f3a72}}
+:root[data-theme="dark"]{--bg:#16151b;--ink:#f2efe6;--line:#8d8b98;--sh:#000;--paper:#24232b;--card:#2b2a33;--grid:rgba(255,255,255,.04);--lav:#3f3a72}
+html,body{min-height:100%}
+body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,'Segoe UI',sans-serif;
+ background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px}
+.disp{font-family:Inter,system-ui,-apple-system,'Segoe UI',sans-serif;font-weight:900;letter-spacing:-.045em;text-transform:uppercase;line-height:.95}
+.mono{font-family:'Space Mono',ui-monospace,Menlo,Consolas,monospace;font-weight:700;letter-spacing:.08em}
+.box{border:2px solid var(--line);box-shadow:4px 4px 0 var(--sh);border-radius:16px}
+.btn{border:2px solid var(--line);box-shadow:3px 3px 0 var(--sh);border-radius:12px;font-weight:800;color:#111;transition:transform .08s,box-shadow .08s;cursor:pointer}
+.btn:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--sh)}
+.btn:focus-visible,.face:focus-visible,.chip:focus-visible{outline:2px dashed var(--pink);outline-offset:3px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.plain{background:var(--paper);color:var(--ink)}
+.scene{perspective:1400px;height:clamp(300px,44vh,380px)}
+.flip{position:relative;width:100%;height:100%;transition:transform .65s cubic-bezier(.3,.8,.3,1);transform-style:preserve-3d}
+.flip.on{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;background:var(--card);backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:20px;text-align:center;cursor:pointer}
+.back{transform:rotateY(180deg)}
+.word{font-size:clamp(1.9rem,8.5vw,3.6rem);max-width:100%;overflow-wrap:anywhere}
+.ex{white-space:pre-line;background:var(--paper);border:2px solid var(--line);border-radius:12px;padding:10px 16px;font-weight:600;font-size:1.05rem}
+.tag{font-family:'Space Mono',ui-monospace,Menlo,Consolas,monospace;font-weight:700;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);background:var(--lav);border:2px solid var(--line);border-radius:8px;padding:2px 8px}
+.bar{height:14px;border:2px solid var(--line);border-radius:99px;background:var(--paper);overflow:hidden}
+.fill{height:100%;background:var(--bad);border-right:2px solid var(--line);width:0;transition:width .4s}
+.chip{border:2px solid var(--line);border-radius:12px;padding:8px 10px;font-weight:800;font-size:.85rem;display:flex;justify-content:space-between;gap:6px;cursor:pointer;color:#111;background:var(--paper)}
+.chip.act{box-shadow:3px 3px 0 var(--sh);transform:translate(-2px,-2px)}
+.chip[data-f=all]{color:var(--ink)}
+.bad{background:var(--bad)}.mid{background:var(--mid)}.good{background:var(--good)}
+@media (prefers-reduced-motion:reduce){.flip{transition:none}.fill{transition:none}}
+.tab{border:2px solid var(--line);border-radius:12px;padding:6px 16px;font-weight:800;background:var(--paper);color:var(--ink);cursor:pointer}
+.tab.act{background:var(--lav);box-shadow:3px 3px 0 var(--sh)}
+.pill{border:2px solid var(--line);border-radius:99px;padding:4px 12px;font-weight:700;font-size:.85rem;background:var(--paper);color:var(--ink);cursor:pointer}
+.pill:hover{background:var(--lav)}
+.opt{border:2px solid var(--line);border-radius:12px;padding:12px 14px;font-weight:700;background:var(--paper);color:var(--ink);text-align:left;cursor:pointer;box-shadow:3px 3px 0 var(--sh)}
+.opt.good{background:var(--good);color:#111}.opt.bad{background:var(--bad);color:#111}.opt[disabled]{cursor:default}
+.opt.sel{background:var(--lav)}
+.chip[data-f=new]{color:var(--ink)}
+</style>
+</head>
+<body>
+<main class="mx-auto w-full max-w-xl px-4 py-5 flex flex-col gap-5">
+  <header class="flex items-center justify-between gap-2">
+    <div>
+      <p class="mono text-xs opacity-70 mb-1">FLASHCARDS / OPPOSITES</p>
+      <h1 class="disp text-3xl sm:text-4xl">Opposite<br><span style="color:var(--pink)">adjectives</span></h1>
+    </div>
+    <div class="flex gap-2">
+      <button id="shuf" class="btn plain p-2" title="Shuffle" aria-pressed="false" aria-label="Shuffle">
+        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+      </button>
+      <button id="theme" class="btn plain p-2" title="Theme" aria-label="Switch theme">
+        <svg id="ico-sun" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg id="ico-moon" class="hidden" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <nav class="flex gap-2">
+    <button class="tab act" data-v="cards">Flashcards</button>
+    <button class="tab" data-v="quiz">Quiz</button>
+  </nav>
+
+  <div id="viewCards" class="flex flex-col gap-5">
+    <section aria-label="Progress" class="flex flex-col gap-2">
+      <div class="flex items-center justify-between">
+        <span id="count" class="font-extrabold text-sm"></span>
+        <span id="fname" class="tag"></span>
+      </div>
+      <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"><div id="fill" class="fill"></div></div>
+    </section>
+
+    <section id="cardWrap" class="flex flex-col gap-4">
+      <div class="scene">
+        <div id="flip" class="flip">
+          <div id="front" class="face front box" tabindex="0" role="button" aria-label="Flip card">
+            <span class="tag">Side A</span>
+            <div id="wa" class="word disp"></div>
+            <div id="ea" class="ex"></div>
+            <button id="sa" class="btn plain p-2" aria-label="Listen"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4zM15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg></button>
+          </div>
+          <div id="back" class="face back box" tabindex="-1" role="button" aria-label="Flip card back">
+            <span class="tag">Side B</span>
+            <div id="wb" class="word disp"></div>
+            <div id="eb" class="ex"></div>
+            <button id="sb" class="btn plain p-2" aria-label="Listen"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4zM15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg></button>
+          </div>
+        </div>
+      </div>
+      <p class="text-center text-sm font-semibold opacity-70">Tap the card to flip it</p>
+      <div class="grid grid-cols-3 gap-3">
+        <button class="btn bad py-3 text-sm sm:text-base" data-r="bad">Don't remember</button>
+        <button class="btn mid py-3 text-sm sm:text-base" data-r="mid">Getting there</button>
+        <button class="btn good py-3 text-sm sm:text-base" data-r="good">I know it!</button>
+      </div>
+      <div class="flex gap-3">
+        <button id="prev" class="btn plain flex-1 py-2">← Back</button>
+        <button id="next" class="btn plain flex-1 py-2">Next →</button>
+      </div>
+    </section>
+
+    <section id="done" class="hidden box p-6 flex flex-col gap-4" style="background:var(--lav)">
+      <h2 class="disp text-3xl">Deck complete</h2>
+      <p id="stats" class="font-semibold"></p>
+      <div id="dbar" class="flex h-6 border-2 rounded-full overflow-hidden" style="border-color:var(--line)"></div>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <button id="rw" class="btn bad py-3 flex-1">Review: don't remember</button>
+        <button id="rm" class="btn mid py-3 flex-1">Review: getting there</button>
+        <button id="ra" class="btn plain py-3 flex-1">Start over</button>
+      </div>
+    </section>
+
+    <section class="flex flex-col gap-3">
+      <h2 class="font-extrabold text-sm">Sections — tap one to see its words</h2>
+      <div id="chips" class="grid grid-cols-2 sm:grid-cols-3 gap-2"></div>
+      <div id="list" class="hidden box p-4 flex flex-col gap-3" style="background:var(--card)">
+        <div class="flex items-center justify-between gap-2">
+          <h3 id="lt" class="font-extrabold"></h3>
+          <button id="study" class="btn plain px-3 py-1 text-sm">Study these →</button>
+        </div>
+        <div id="pills" class="flex flex-wrap gap-2"></div>
+      </div>
+      <button id="reset" class="text-xs font-bold underline self-start opacity-70">Reset all ratings</button>
+    </section>
+  </div>
+
+  <section id="viewQuiz" class="hidden"><div id="quiz" class="flex flex-col gap-4"></div></section>
+</main>
+<script>
+const RAW = `tasty|a tasty pizza|tasteless|a tasteless soup
+sweet|sweet tea|bitter|bitter coffee
+salty|salty popcorn|sugary|a sugary drink
+tender|tender meat|tough|a tough steak
+hot|a hot summer|cold|a cold shower
+fresh|fresh bread|spoiled|spoiled milk
+ready|a ready meal|raw|raw fish
+warm|a warm jacket|cool|a cool breeze
+early|an early train|late|a late dinner
+best|the best friend|worst|the worst day
+dry|dry skin|wet|wet hair
+male|a male lion|female|a female doctor
+first|the first floor|last|the last page
+thin|a thin slice|thick|a thick book
+ill|an ill child|healthy|a healthy diet
+curved|a curved road|straight|a straight road
+far|the far end|near|the near future
+fast / quick|a fast car (speed)~a quick shower (time)|slow|a slow life
+full|a full glass|empty|an empty glass
+heavy|a heavy suitcase|light|a light bag
+inside|inside information|outside|an outside expert
+easy|an easy exam|difficult|a difficult decision
+narrow|a narrow street|wide|a wide river
+weak|weak tea|strong|strong coffee
+typical|a typical day|weird|a weird noise
+cheap|a cheap hotel|expensive|an expensive watch
+single|a single mother|married|a married couple
+sharp|a sharp knife|dull|a dull pain
+loud|loud music|quiet|a quiet park
+tall|a tall guy|short|a short film
+high|a high price|low|a low price
+tiny|a tiny apartment|huge|a huge crowd
+safe|a safe area|dangerous|a dangerous road
+soft|a soft pillow|hard|a hard bed
+cruel|a cruel joke|kind|a kind smile
+greedy|a greedy boss|generous|a generous tip
+silly|a silly mistake|smart|a smart idea
+dirty|dirty hands|clean|a clean kitchen
+noisy|a noisy classroom|calm|a calm sea
+right|the right answer|wrong|the wrong number
+friendly|a friendly neighbour|hostile|a hostile reaction
+interesting|an interesting book|boring|a boring meeting
+interested|interested customers|bored|bored students
+polite|a polite reply|rude|a rude comment
+lazy|a lazy Sunday|hard-working|a hard-working team
+modern|modern art|traditional|traditional food
+rich|a rich flavour|poor|a poor performance`;
+const P = RAW.split('\n').map(l => { const [a, ea, b, eb] = l.split('|'); return { a, ea: ea.replace(/~/g, '\n'), b, eb }; });
+const GAP = `This soup has no flavour at all. It's completely ___.|tasteless|thick,fresh
+I forgot the sugar, and the coffee tastes really ___.|bitter|sweet,tender
+Too many ___ drinks are bad for your teeth.|sugary|salty,sharp
+You can cut this meat with a spoon – it's so ___.|tender|tough,raw
+I can't chew this steak. It's really ___.|tough|tender,fresh
+Don't drink that milk. It smells terrible – it's ___.|spoiled|fresh,cool
+Don't eat that chicken – it's still pink inside. It's ___.|raw|ready,dry
+Draw a ___ line, not a straight one, to make a wave.|curved|thin,short
+I can't cut the bread with this ___ knife.|dull|heavy,short
+I can't hear you – the phone signal is very ___.|weak|thin,dull
+There was a ___ noise in the kitchen at 3 a.m., and nobody knew what it was.|weird|typical,ready
+It's a ___ Monday: I'm late, it's raining, and the bus is full.|typical|weird,tiny
+The players walked out and met a ___ crowd that booed them.|hostile|friendly,generous
+He never shares his food and always wants more. He's so ___.|greedy|generous,silly
+She gave every waiter a big tip. She's very ___.|generous|greedy,rude
+It's ___ to leave a dog alone in a hot car all day.|cruel|silly,dull
+The street was so ___ that only one car could pass.|narrow|thick,short
+Take a ___ blanket – it's freezing tonight.|thick|thin,sharp
+Be careful with that ___ knife – it can cut your finger.|sharp|dull,heavy
+She gets up at six and never misses a deadline. She's really ___.|hard-working|lazy,silly
+He spent the whole Sunday on the sofa. It was a ___ day.|lazy|hard-working,noisy
+He isn't married and doesn't have a girlfriend. He's ___.|single|married,tender
+After the storm, the sea was quiet and ___.|calm|noisy,dull
+Say "please" and "thank you" – it's ___.|polite|rude,lazy
+This building has glass walls and solar panels. It's very ___.|modern|traditional,dirty
+We eat ___ food on holidays – the same dishes my grandmother made.|traditional|modern,weird
+I'm really ___ in history; I read about it every night.|interested|interesting,bored
+The lesson was so long that I felt ___.|bored|boring,interested
+We hired an ___ expert because nobody in the company could fix it.|outside|inside,single
+It was a hot day, but a ___ breeze came from the sea.|cool|warm,dry
+This restaurant is famous for its ___ flavours – every dish tastes amazing.|rich|thin,weak
+He didn't study at all and got ___ results on the test.|poor|high,strong`.split('\n').map(l => { const [q, a, d] = l.split('|'); return { q, a, o: d.split(',') }; });
+const COL = `___ rain|heavy|strong,big|There's heavy rain out there — let's just stay in tonight.
+___ coffee|strong|heavy,hard|I barely slept last night, so I really need a strong coffee.
+___ temperature|high|tall,big|She's got a high temperature, so she's staying home from school today.
+___ prices|low|small,cheap|I love that shop, the prices are so low.
+___ speed|high|fast,quick|He was driving at high speed and got a ticket.
+___ car|fast|quick,rapid|He just bought a fast car — he can't stop talking about it.
+___ shower|quick|fast,rapid|Give me five minutes, I'll just take a quick shower.
+___ food|fast|quick,rapid|We were starving, so we just grabbed some fast food.
+___ wind|strong|big,tall|Hold onto your hat, there's a strong wind today.
+___ noise|loud|strong,big|What was that loud noise? It scared me half to death.
+___ tea|weak|small,low|This tea's really weak, can you add another bag?
+___ film|short|small,little|We made a short film for class, it's only three minutes long.
+___ guy|tall|high,long|You know that tall guy from our class? He plays basketball.
+___ ice|thin|narrow,small|Careful over there, the ice looks pretty thin.
+___ escape|narrow|thin,small|That was such a narrow escape — the bus almost left without me!
+___ drink|soft|light,weak|Do you want a soft drink, or something stronger?
+___ moon|full|complete,whole|Look at that! It's a full moon tonight.
+___ air|fresh|new,young|I need some fresh air, let's go for a walk.
+___ welcome|warm|hot,heated|They gave us such a warm welcome when we showed up.
+___ disappointment|bitter|sour,sharp|Losing that game was such a bitter disappointment.
+___ materials|raw|tough,wild|They ran out of raw materials, so the factory had to stop.
+___ sleeper|light|weak,thin|Don't slam the door — she's such a light sleeper.
+___ tooth|sweet|sugar,tasty|I can never say no to cake, I've got such a sweet tooth.
+___ snack|quick|fast,rapid|I just need a quick snack before we go, I'm starving.
+___ look|quick|fast,rapid|Just give it a quick look, I don't need every detail.
+___ building|tall,high|long|Wow, look at how tall that building is!~That's such a high building, the view must be amazing.
+___ pain|dull,sharp,strong|heavy|I've had this dull pain in my shoulder all week.~I felt a sharp pain when I twisted my ankle.~I've got a strong pain in my knee after the run.
+___ fog|thick,heavy|strong|I could barely see the road, the fog was so thick.~The fog was so heavy, they had to cancel our flight.
+___ answer|right,correct|true|Nice, that's the right answer!~You got the correct answer, well done!
+___ decision|tough,hard|heavy|Picking just one option was a tough decision.~It was a hard decision, but I think I made the right one.
+___ flavour|rich|strong,full|Dark chocolate has a rich flavour.
+___ results|poor|bad,weak|If you don't study hard, you'll get poor results on the final test.`.split('\n').map(l => { const [q, a, d, ex] = l.split('|'); return { q, a: a.split(','), o: d.split(','), ex: ex.split('~') }; });
+
+const $ = id => document.getElementById(id);
+const NAMES = { all: 'All words', new: 'Not rated', bad: "Don't remember", mid: 'Getting there', good: 'I know it' };
+let S = { status: {}, filter: 'all', list: null, order: [], pos: 0, flipped: false, shuffle: false, done: false };
+const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+try { S.status = JSON.parse(store.get('adj-status') || '{}'); } catch (e) { S.status = {}; }
+const saveStatus = () => store.set('adj-status', JSON.stringify(S.status));
+const st = i => S.status[i] || 'new';
+const count = k => P.filter((_, i) => k === 'all' || st(i) === k).length;
+const toTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+function shuffled(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+function build() {
+  let ids = P.map((_, i) => i).filter(i => S.filter === 'all' || st(i) === S.filter);
+  if (S.shuffle) ids = shuffled(ids);
+  S.order = ids; S.pos = 0; S.done = false; S.flipped = false;
+}
+function fillCard() {
+  const p = P[S.order[S.pos]]; if (!p) return;
+  $('wa').textContent = p.a; $('wb').textContent = p.b;
+  $('ea').textContent = p.ea; $('eb').textContent = p.eb;
+}
+function render(withCard = true) {
+  const n = S.order.length;
+  $('flip').classList.toggle('on', S.flipped);
+  $('cardWrap').classList.toggle('hidden', S.done);
+  $('done').classList.toggle('hidden', !S.done);
+  $('fname').textContent = NAMES[S.filter];
+  $('count').textContent = n ? `Card ${S.done ? n : S.pos + 1} of ${n}` : 'Nothing in this section yet';
+  const pct = n ? (S.done ? 100 : (S.pos / n) * 100) : 0;
+  $('fill').style.width = pct + '%';
+  $('fill').parentElement.setAttribute('aria-valuenow', Math.round(pct));
+  if (withCard && n) fillCard();
+  $('prev').disabled = !n || (S.pos === 0 && !S.done);
+  $('next').disabled = !n || S.done;
+  document.querySelectorAll('[data-r]').forEach(b => b.disabled = !n || S.done);
+  sections();
+  if (S.done) summary();
+}
+function sections() {
+  $('chips').innerHTML = ['all', 'new', 'bad', 'mid', 'good'].map(k =>
+    `<button class="chip ${k === 'all' || k === 'new' ? '' : k} ${S.list === k ? 'act' : ''}" data-f="${k}"><span>${NAMES[k]}</span><span>${count(k)}</span></button>`).join('');
+  $('list').classList.toggle('hidden', !S.list);
+  if (!S.list) return;
+  const ids = P.map((_, i) => i).filter(i => S.list === 'all' || st(i) === S.list);
+  $('lt').textContent = `${NAMES[S.list]} · ${ids.length}`;
+  $('pills').innerHTML = ids.length ? ids.map(i => `<button class="pill" data-i="${i}">${P[i].a} ↔ ${P[i].b}</button>`).join('') : '<p class="text-sm font-semibold opacity-70">Nothing here yet. Rate some cards first.</p>';
+  $('study').disabled = !ids.length;
+}
+function summary() {
+  const t = S.order.length, k = x => S.order.filter(i => st(i) === x).length;
+  const g = k('good'), m = k('mid'), b = k('bad');
+  $('stats').textContent = `I know it: ${g} of ${t} · Getting there: ${m} · Don't remember: ${b}` + (t - g - m - b ? ` · Not rated: ${t - g - m - b}` : '');
+  $('dbar').innerHTML = [[g, 'var(--good)'], [m, 'var(--mid)'], [b, 'var(--bad)']].map(([v, c]) => `<div style="width:${t ? v / t * 100 : 0}%;background:${c}"></div>`).join('');
+  $('rw').disabled = !count('bad'); $('rm').disabled = !count('mid');
+}
+function go(np) {
+  if (np < 0 || np >= S.order.length) return;
+  const swap = () => { S.pos = np; S.done = false; render(); };
+  if (S.flipped) { S.flipped = false; $('flip').classList.remove('on'); setTimeout(swap, 320); } else swap();
+}
+function rate(r) {
+  if (S.done || !S.order.length) return;
+  S.status[S.order[S.pos]] = r; saveStatus();
+  if (S.pos < S.order.length - 1) go(S.pos + 1); else { S.done = true; S.flipped = false; render(false); }
+}
+function setFilter(f) { S.filter = f; build(); render(); }
+function flip() { if (S.done || !S.order.length) return; S.flipped = !S.flipped; $('flip').classList.toggle('on', S.flipped); }
+let VOICES = [];
+function loadVoices() { VOICES = speechSynthesis.getVoices(); }
+if ('speechSynthesis' in window) { loadVoices(); speechSynthesis.onvoiceschanged = loadVoices; }
+function pickVoice() {
+  if (!VOICES.length) return null;
+  const en = VOICES.filter(v => v.lang && v.lang.startsWith('en'));
+  const female = en.find(v => /female|zira|samantha|susan|victoria|karen|moira|tessa|fiona|us english/i.test(v.name));
+  return female || en[0] || null;
+}
+function speak(text) {
+  if (!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text.replace(/\//g, ',').replace(/[()]/g, '').replace(/\n/g, '. '));
+  u.lang = 'en-US'; u.rate = .9; u.pitch = .8;
+  const v = pickVoice(); if (v) u.voice = v;
+  speechSynthesis.speak(u);
+}
+const cur = () => P[S.order[S.pos]];
+
+/* ---------- Quiz ---------- */
+let Q = null;
+function startQuiz(t) {
+  Q = { t, i: 0, score: 0, ans: null, sel: [], items: shuffled(t === 'gap' ? GAP : COL).slice(0, 30).map(x => ({ ...x, opts: shuffled(t === 'gap' ? [x.a, ...x.o] : [...x.a, ...x.o]) })) };
+  renderQuiz();
+}
+function finish(a) {
+  const x = Q.items[Q.i], c = Q.t === 'gap' ? [x.a] : x.a;
+  Q.ans = a;
+  if (a.length === c.length && c.every(v => a.includes(v))) Q.score++;
+  renderQuiz();
+}
+function renderQuiz() {
+  const el = $('quiz');
+  if (!Q) {
+    el.innerHTML = `<div class="box p-5 flex flex-col gap-3" style="background:var(--card)">
+      <p class="font-semibold">Two tests, 30 questions each. Think about meaning and natural word pairs – don't just eliminate.</p>
+      <button class="btn plain py-3 px-4 text-left" data-t="gap">Fill the gap<br><span class="text-sm font-semibold opacity-70">30 questions · choose the adjective that fits the sentence</span></button>
+      <button class="btn plain py-3 px-4 text-left" data-t="col">Collocation match<br><span class="text-sm font-semibold opacity-70">30 questions · choose the adjective that goes best with the noun. With some nouns, two adjectives fit equally well – select both.</span></button></div>`;
+    return;
+  }
+  const n = Q.items.length;
+  if (Q.i >= n) {
+    const msg = Q.score >= 27 ? 'Excellent! Those collocations are solid.' : Q.score >= 18 ? 'Good job! A little more practice will help.' : 'Keep going – review the cards and try again.';
+    el.innerHTML = `<div class="box p-6 flex flex-col gap-4" style="background:var(--lav)">
+      <h2 class="disp text-3xl">Score: ${Q.score} / ${n}</h2><p class="font-semibold">${msg}</p>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <button class="btn good py-3 flex-1" data-t="${Q.t}">Try again</button>
+        <button class="btn plain py-3 flex-1" data-act="menu">Other test</button>
+        <button class="btn plain py-3 flex-1" data-act="cards">Flashcards</button></div></div>`;
+    return;
+  }
+  const x = Q.items[Q.i], done = Q.ans !== null, gap = Q.t === 'gap', corr = gap ? [x.a] : x.a;
+  const ok = done && Q.ans.length === corr.length && corr.every(v => Q.ans.includes(v));
+  const prompt = gap ? x.q.replace('___', done ? `<b>${x.a}</b>` : '<span class="disp">_____</span>') : `<span class="disp text-3xl">${x.q.replace('___', '_____')}</span>`;
+  const opts = x.opts.map(o => {
+    const c = done ? (corr.includes(o) ? 'good' : Q.ans.includes(o) ? 'bad' : '') : (Q.sel.includes(o) ? 'sel' : '');
+    return `<button class="opt ${c}" data-o="${o}" ${done ? 'disabled' : ''}>${o}</button>`;
+  }).join('');
+  const noun = x.q.replace('___ ', '');
+  const fb = done ? (ok ? 'Correct! ' : 'Not quite. ') + (gap ? `The answer is “${x.a}”.` : `Natural: ${x.a.map(a => a + ' ' + noun).join(' / ')}${x.a.length > 1 ? ' (both work)' : ''}.<br><span class="opacity-70">${x.ex.join(' ')}</span>`) : '';
+  el.innerHTML = `<div class="flex items-center justify-between"><span class="font-extrabold text-sm">Question ${Q.i + 1} of ${n}</span><span class="tag">Score ${Q.score}</span></div>
+    <div class="bar"><div class="fill" style="width:${(Q.i / n) * 100}%"></div></div>
+    ${gap ? '' : '<p class="text-sm font-semibold opacity-70">Choose the adjective that goes best with the noun. Sometimes two fit – select both, then press Check.</p>'}
+    <div class="box p-5 text-xl font-semibold" style="background:var(--card)">${prompt}</div>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">${opts}</div>
+    ${!done && !gap ? `<button class="btn plain py-3" data-act="check" ${Q.sel.length ? '' : 'disabled'}>Check answer</button>` : ''}
+    ${done ? `<p class="font-bold">${fb}</p><button class="btn plain py-3" data-act="next">${Q.i + 1 === n ? 'See results' : 'Next question →'}</button>` : ''}`;
+}
+function setView(v) {
+  $('viewCards').classList.toggle('hidden', v !== 'cards');
+  $('viewQuiz').classList.toggle('hidden', v !== 'quiz');
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('act', t.dataset.v === v));
+  if (v === 'quiz') renderQuiz();
+}
+
+/* ---------- Events ---------- */
+document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => setView(t.dataset.v)));
+$('quiz').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b || b.disabled) return;
+  const act = b.dataset.act;
+  if (b.dataset.t) startQuiz(b.dataset.t);
+  else if (b.dataset.o !== undefined && Q && Q.ans === null) {
+    const o = b.dataset.o;
+    if (Q.t === 'gap') finish([o]);
+    else { const k = Q.sel.indexOf(o); const max = Q.items[Q.i].a.length; if (k >= 0) Q.sel.splice(k, 1); else if (Q.sel.length < max) Q.sel.push(o); renderQuiz(); }
+  }
+  else if (act === 'check' && Q.sel.length) finish(Q.sel.slice());
+  else if (act === 'next') { Q.ans = null; Q.sel = []; Q.i++; renderQuiz(); }
+  else if (act === 'menu') { Q = null; renderQuiz(); }
+  else if (act === 'cards') setView('cards');
+});
+$('front').addEventListener('click', flip);
+$('back').addEventListener('click', flip);
+$('front').addEventListener('keydown', e => { if (e.key === 'Enter') flip(); });
+$('sa').addEventListener('click', e => { e.stopPropagation(); const p = cur(); if (p) speak(p.a + '. ' + p.ea); });
+$('sb').addEventListener('click', e => { e.stopPropagation(); const p = cur(); if (p) speak(p.b + '. ' + p.eb); });
+document.querySelectorAll('[data-r]').forEach(b => b.addEventListener('click', () => rate(b.dataset.r)));
+$('prev').addEventListener('click', () => { if (S.done) { S.done = false; render(); } else go(S.pos - 1); });
+$('next').addEventListener('click', () => { if (S.pos === S.order.length - 1) { S.done = true; S.flipped = false; render(false); } else go(S.pos + 1); });
+$('chips').addEventListener('click', e => { const c = e.target.closest('[data-f]'); if (!c) return; S.list = S.list === c.dataset.f ? null : c.dataset.f; sections(); });
+$('pills').addEventListener('click', e => { const p = e.target.closest('[data-i]'); if (!p) return; const i = +p.dataset.i; S.filter = S.list; build(); S.pos = Math.max(0, S.order.indexOf(i)); render(); toTop(); });
+$('study').addEventListener('click', () => { setFilter(S.list); toTop(); });
+$('rw').addEventListener('click', () => setFilter('bad'));
+$('rm').addEventListener('click', () => setFilter('mid'));
+$('ra').addEventListener('click', () => setFilter('all'));
+$('shuf').addEventListener('click', () => { S.shuffle = !S.shuffle; $('shuf').setAttribute('aria-pressed', S.shuffle); $('shuf').style.background = S.shuffle ? 'var(--good)' : ''; $('shuf').style.color = S.shuffle ? '#111' : ''; build(); render(); });
+$('reset').addEventListener('click', () => { S.status = {}; saveStatus(); S.list = null; setFilter('all'); });
+document.addEventListener('keydown', e => {
+  if ($('viewCards').classList.contains('hidden')) return;
+  if (e.key === ' ' && document.activeElement.tagName !== 'BUTTON') { e.preventDefault(); flip(); }
+  if (e.key === 'ArrowRight') $('next').click();
+  if (e.key === 'ArrowLeft') $('prev').click();
+});
+function applyTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  $('ico-sun').classList.toggle('hidden', t === 'dark');
+  $('ico-moon').classList.toggle('hidden', t !== 'dark');
+}
+applyTheme(store.get('adj-theme') || 'light');
+$('theme').addEventListener('click', () => { const t = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; applyTheme(t); store.set('adj-theme', t); });
+build(); render();
+</script>
+</body>
+</html>
